@@ -1,15 +1,34 @@
 import React from 'react';
 import Header from './Header';
 import Order from './Order';
+import sampleFishes from '../sample-fishes';
 import Inventory from './Inventory';
 
 class App extends React.Component {
   constructor() {
     super();
+
+    this.addFish = this.addFish.bind(this);
     this.state = {
       fishes: {},
       order: {},
     };
+  }
+  addFish(fish) {
+    //update the state
+    //...this.state.fishes == existing fishes
+    const fishes = { ...this.state.fishes };
+    //add in new fish
+    const timestamp = Date.now();
+    fishes[`fish-${timestamp}`] = fish;
+    //set the state
+    this.setState({ fishes });
+  }
+
+  LoadSamples() {
+    this.setState({
+      fishes: sampleFishes,
+    });
   }
   render() {
     return (
@@ -18,7 +37,7 @@ class App extends React.Component {
           <Header tagline="Fresh Seafood Market" />
         </div>
         <Order />
-        <Inventory />
+        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
       </div>
     );
   }
