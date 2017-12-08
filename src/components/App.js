@@ -5,6 +5,7 @@ import sampleFishes from '../sample-fishes';
 import Inventory from './Inventory';
 import Fish from './Fish';
 import base from '../base';
+//import { updatedFish } from
 
 class App extends React.Component {
   constructor() {
@@ -13,6 +14,9 @@ class App extends React.Component {
     this.addFish = this.addFish.bind(this);
     this.loadSamples = this.loadSamples.bind(this);
     this.addToOrder = this.addToOrder.bind(this);
+    this.updateFish = this.updateFish.bind(this);
+    this.removeFish = this.removeFish.bind(this);
+    this.removeFromOrder = this.removeFromOrder.bind(this);
 
     this.state = {
       fishes: {},
@@ -60,6 +64,18 @@ class App extends React.Component {
     this.setState({ fishes });
   }
 
+  updateFish(key, updatedFish) {
+    const fishes = { ...this.state.fishes };
+    fishes[key] = updatedFish;
+    this.setState({ fishes });
+  }
+
+  removeFish(key) {
+    const fishes = { ...this.state.fishes };
+    fishes[key] = null;
+    this.setState({ fishes });
+  }
+
   loadSamples() {
     this.setState({
       fishes: sampleFishes,
@@ -72,6 +88,12 @@ class App extends React.Component {
     //update the new number of fish ordered
     order[key] = order[key] + 1 || 1;
     //update the state
+    this.setState({ order });
+  }
+
+  removeFromOrder(key) {
+    const order = { ...this.state.order };
+    delete order[key];
     this.setState({ order });
   }
 
@@ -95,15 +117,23 @@ class App extends React.Component {
           fishes={this.state.fishes}
           order={this.state.order}
           params={this.props.params}
+          removeFromOrder={this.removeFromOrder}
         />
         <Inventory
           addFish={this.addFish}
           loadSamples={this.loadSamples}
           fishes={this.state.fishes}
+          updateFish={this.updateFish}
+          removeFish={this.removeFish}
+          storeId={this.props.params.storeId}
         />
       </div>
     );
   }
 }
+
+App.propTypes = {
+  params: React.PropTypes.object.isRequired,
+};
 
 export default App;
