@@ -11,6 +11,7 @@
     "eslint-plugin-flowtype": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.8.0",
+    "git-directory-deploy": "^1.5.1",
     "react-scripts": "0.6.1",
     "stylus": "0.54.5"
   },
@@ -28,6 +29,8 @@
     "watch":
       "concurrently --names \"webpack, stylus\" --prefix name \"npm run start\" \"npm run styles:watch\"",
     "build": "react-scripts build",
+    "deploy:gh-pages":
+      "npm run build && git-directory-deploy --directory build --branch --gh-pages",
     "eject": "react-scripts eject",
     "styles":
       "stylus -u autoprefixer-stylus ./src/css/style.styl -o ./src/css/style.css",
