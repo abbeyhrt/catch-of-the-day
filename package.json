@@ -30,7 +30,7 @@
       "concurrently --names \"webpack, stylus\" --prefix name \"npm run start\" \"npm run styles:watch\"",
     "build": "react-scripts build",
     "deploy:gh-pages":
-      "npm run build && git-directory-deploy --directory build --branch --gh-pages",
+      "npm run build && cp build/index.html build/404.html && git-directory-deploy --directory build --branch gh-pages",
     "eject": "react-scripts eject",
     "styles":
       "stylus -u autoprefixer-stylus ./src/css/style.styl -o ./src/css/style.css",
